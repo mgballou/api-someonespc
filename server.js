@@ -8,7 +8,8 @@ const morgan = require('morgan')
 const cors = require('cors')
 
 // require routers
-
+const pokemonRouter = require('./routes/pokemon-router')
+const authRouter = require('./routes/auth-router')
 
 // config 
 
@@ -26,8 +27,8 @@ app.use(morgan("dev"))
 
 ////// mount routers as middleware
 
-
-
+app.use('/pokemon', pokemonRouter)
+app.use('/auth', authRouter)
 // test home route
 
 app.get('/', (req,res)=>res.send('hello pokemon'))
