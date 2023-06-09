@@ -6,7 +6,7 @@ module.exports = {
     index
 }
 
-async function create(req, res) {
+async function create(req, res, next) {
     try {
         let endpoint
         if (req.body.name > 1008) {
@@ -26,6 +26,7 @@ async function create(req, res) {
             name: response.data.name.toUpperCase(),
             dexNumber: response.data.id,
             user: req.user._id,
+            // user: "6482a4b40cdd32d1c043ef68",
             sprite: response.data.sprites.front_default,
             type1: response.data.types[0].type.name,
             stats: response.data.stats.map(statRecord => {
@@ -52,17 +53,18 @@ async function create(req, res) {
         } else {
             newPokemon.type2 = ''
         }
-        if (randomInt === 1 && newPokemon.dexNumber <= 905) {
-            newPokemon.sprite = response.data.sprites.front_shiny
-        }
+        // if (randomInt === 1 && newPokemon.dexNumber <= 905) {
+        //     newPokemon.sprite = response.data.sprites.front_shiny
+        // }
         res.status(201).json(await Pokemon.create(newPokemon))
     } catch (error) {
-        
+        console.log(error)
+        res.status(400).json({ error: error.message })
     }
 
 }
 
-async function index(req, res){
+async function index(req, res, next){
     try {
         const allUsersPokemon = await Pokemon.find({ 'user': req.user._id })
         res.status(200).json(allUsersPokemon)
