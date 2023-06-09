@@ -1,6 +1,7 @@
 const axios = require('axios')
 const { Pokemon } = require('../models')
 const { handleValidateOwnership } = require('../middleware/auth')
+
 module.exports = {
     create,
     index,
@@ -64,18 +65,7 @@ async function create(req, res, next) {
         res.status(400).json({ error: error.message })
     }
 
-}
 
-async function index(req, res, next) {
-    try {
-        const allUsersPokemon = await Pokemon.find({ 'user': req.user._id })
-        res.status(200).json(allUsersPokemon)
-
-    } catch (error) {
-        console.log(error)
-        res.status(400).json({ error: error.message })
-
-    }
 }
 
 async function update(req, res, next) {
@@ -91,6 +81,18 @@ async function update(req, res, next) {
 
     }
 
+}
+
+async function index(req, res, next) {
+    try {
+        const allUsersPokemon = await Pokemon.find({ 'user': req.user._id })
+        res.status(200).json(allUsersPokemon)
+
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({ error: error.message })
+
+    }
 }
 
 async function show(req, res, next) {
