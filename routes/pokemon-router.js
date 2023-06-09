@@ -8,5 +8,8 @@ router.get('/', requireToken, pokemonCtrl.index)
 
 router.post('/', requireToken, pokemonCtrl.create)
 
+router.put('/:id', requireToken, pokemonCtrl.update)
+
+router.get('/:id', requireToken, pokemonCtrl.show)
 
 module.exports = router
