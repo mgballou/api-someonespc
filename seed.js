@@ -9,10 +9,6 @@ const apiPath = 'https://pokeapi.co/api/v2/'
 const itemEndpoint = 'item-attribute/7/'
 const naturesEndpoint = 'nature/?limit=100'
 
-// let allItems = []
-
-// let allNatures = []
-// let naturesData
 
 async function getAllItems() {
 
@@ -55,7 +51,6 @@ async function getNatureData() {
                 natureObject.statUp = response.data.increased_stat.name
                 natureObject.statDown = response.data.decreased_stat.name
             }
-           
 
             return natureObject
         })

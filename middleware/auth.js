@@ -57,7 +57,7 @@ return jwt.sign({id: user._id}, secret, {expiresIn: 36000 })
 }
 
 function handleValidateOwnership (req, document) {
-    const ownerId = document.owner._id || document.owner 
+    const ownerId = document.user._id || document.user 
 
     if(!req.user._id.equals(ownerId)){
         throw Error('Unauthorized Access')

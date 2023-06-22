@@ -26,7 +26,8 @@ const pokemonSchema = new mongoose.Schema({
     },
     stats: {},
     heldItem: { type: String, default: '' },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    nature: { type: mongoose.Schema.Types.ObjectId, ref: 'Nature'}
 
 }
 )

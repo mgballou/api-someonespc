@@ -1,5 +1,5 @@
 const axios = require('axios')
-const { Pokemon } = require('../models')
+const { Pokemon, Nature } = require('../models')
 const { handleValidateOwnership } = require('../middleware/auth')
 
 module.exports = {
@@ -9,7 +9,10 @@ module.exports = {
     show
 }
 
+
+
 async function create(req, res, next) {
+
     try {
         let endpoint
         let randomInt = Math.floor(Math.random() * 10)
@@ -25,6 +28,9 @@ async function create(req, res, next) {
         }
 
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${endpoint}`)
+        const hardy =  await Nature.find({name: "hardy"})
+        console.log(hardy)
+        
 
         const newPokemon = {
             name: response.data.name.toUpperCase(),
@@ -40,7 +46,8 @@ async function create(req, res, next) {
                     values: {
                         base: baseStat,
                         effort: 0,
-                        individual: 0
+                        individual: 0,
+                        modifier: 0,
                     }
                 }
             }),
@@ -49,7 +56,8 @@ async function create(req, res, next) {
                 all: response.data.abilities.map(abilityRecord => {
                     return abilityRecord.ability.name
                 })
-            }
+            },
+            nature: "649359539b11d5afcee03d9e"
         }
         if (response.data.types.length > 1) {
             newPokemon.type2 = response.data.types[1].type.name
@@ -59,7 +67,8 @@ async function create(req, res, next) {
         if (randomInt === 1 && newPokemon.dexNumber <= 905) {
             newPokemon.sprite = response.data.sprites.front_shiny
         }
-        res.status(201).json(await Pokemon.create(newPokemon))
+        console.log(newPokemon)
+        res.status(201).json((await Pokemon.create(newPokemon)))
     } catch (error) {
         console.log(error)
         res.status(400).json({ error: error.message })
@@ -96,9 +105,12 @@ async function index(req, res, next) {
 }
 
 async function show(req, res, next) {
+
     try {
-        const foundPokemon = await Pokemon.findById(req.params.id)
+        const foundPokemon = await Pokemon.findById(req.params.id).populate('nature')
+        
         handleValidateOwnership(req, foundPokemon)
+
         res.status(200).json(foundPokemon)
     } catch (error) {
         res.status(400).json({ error: error.message })
