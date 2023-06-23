@@ -12,4 +12,6 @@ router.put('/:id', requireToken, pokemonCtrl.update)
 
 router.get('/:id', requireToken, pokemonCtrl.show)
 
+router.delete('/:id', requireToken, pokemonCtrl.deleteOne)
+
 module.exports = router

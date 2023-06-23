@@ -10,6 +10,7 @@ const cors = require('cors')
 // require routers
 const pokemonRouter = require('./routes/pokemon-router')
 const authRouter = require('./routes/auth-router')
+const teamsRouter = require('./routes/teams-router')
 
 // config 
 
@@ -34,6 +35,7 @@ app.use(morgan("dev"))
 
 app.use('/pokemon', pokemonRouter)
 app.use('/auth', authRouter)
+app.use('/teams', teamsRouter)
 // test home route
 
 app.get('/', (req,res)=>res.send('hello pokemon'))

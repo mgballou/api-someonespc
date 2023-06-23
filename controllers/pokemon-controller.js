@@ -6,7 +6,8 @@ module.exports = {
     create,
     index,
     update,
-    show
+    show,
+    deleteOne
 }
 
 
@@ -81,9 +82,20 @@ async function update(req, res, next) {
     try {
         const foundPokemon = await Pokemon.findById(req.params.id)
         handleValidateOwnership(req, foundPokemon)
-        foundPokemon.nickname = req.body.nickname
-        foundPokemon.abilities.current = req.body.ability
-        foundPokemon.heldItem = req.body.heldItem
+        if ('stats' in req.body){
+            foundPokemon.stats = req.body.stats
+
+        }
+
+        if ('nature' in req.body){
+            foundPokemon.nature = req.body.nature
+        }
+
+        if ('moves' in req.body){
+            foundPokemon.moves = req.body.moves
+        }
+        // foundPokemon.abilities.current = req.body.ability
+        // foundPokemon.heldItem = req.body.heldItem
         res.status(200).json(await foundPokemon.save())
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -112,6 +124,21 @@ async function show(req, res, next) {
         handleValidateOwnership(req, foundPokemon)
 
         res.status(200).json(foundPokemon)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+
+    }
+}
+
+async function deleteOne(req, res, next){
+    try {
+        ////// pull from teams
+        const foundPokemon = await Pokemon.findById(req.params.id)
+        handleValidateOwnership(req, foundPokemon)
+        res.status(202).json(await Pokemon.findOneAndDelete(req.params.id))
+
+
+        
     } catch (error) {
         res.status(400).json({ error: error.message })
 
