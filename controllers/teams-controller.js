@@ -35,14 +35,17 @@ async function index(req, res, next){
 
 async function update(req, res, next){
     try {
+        
         const foundTeam = await Team.findById(req.params.id)
+        
         handleValidateOwnership(req, foundTeam)
 
-        if (foundTeam.pokemon.length > 5) {
-            throw new Error("You can only take up to six Pokemon with you at one time.")
+         if (req.body.length > 6) {
+           throw new Error("You can only take up to six Pokemon with you at one time.")
         }
-        foundTeam.pokemon.push(req.body.addPokemon)
-        res.status(200).json(foundTeam.save())
+        foundTeam.pokemon = req.body
+        
+        res.status(200).json(await foundTeam.save())
         
     } catch (error) {
         console.log(error)

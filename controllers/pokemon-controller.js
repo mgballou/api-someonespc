@@ -1,5 +1,5 @@
 const axios = require('axios')
-const { Pokemon, Nature } = require('../models')
+const { Pokemon, Nature, Team } = require('../models')
 const { handleValidateOwnership } = require('../middleware/auth')
 
 module.exports = {
@@ -132,13 +132,21 @@ async function show(req, res, next) {
 
 async function deleteOne(req, res, next){
     try {
-        ////// pull from teams
+        
         const foundPokemon = await Pokemon.findById(req.params.id)
         handleValidateOwnership(req, foundPokemon)
-        res.status(202).json(await Pokemon.findOneAndDelete(req.params.id))
+       
 
+        const teamsPokemonIsIn = await Team.find({ 'pokemon': req.params.id })
 
+        teamsPokemonIsIn.forEach(async team => {
+            team.pokemon.pull(req.body.id)
+            await team.save()
+        })
         
+
+        res.status(202).json(await Pokemon.findOneAndDelete({_id: req.params.id}))
+
     } catch (error) {
         res.status(400).json({ error: error.message })
 
