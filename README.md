@@ -37,7 +37,7 @@ JWT_SECRET=<your_JWT_secret>
 
 ### Current
 
-> * Create accounts and log in (JWT authorization)
+> * Create accounts and log in (JWT auth)
 > * Create any Pokemon up to #1008 and add it to your box
 > * Adjust the stats of each Pokemon
 > * Create Teams, and drag-and-drop your Pokemon into them
