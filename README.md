@@ -13,9 +13,20 @@
 ## Table of Contents
 
 - [Project Description](#project-description)
+- [Usage](#usage)
 - [Installation](#installation)
 - [Features](#features)
 - [Technologies](#technologies)
+
+
+## Usage
+
+> Live demo is available at https://someones-pc.netlify.app/
+>
+> Create an account and log in, or use our guest account to explore features.
+> 
+> All the Pokémon you Create can be found in your Box. From there, click on a sprite to adjust that Pokémon’s stats. Once you’ve got a squad ready, Create a new Team and drop in who you’d like to carry in your party. Keep making changes, and make new Teams to plan out different strategies and combinations. Save your plans and refer back between in-game sessions.
+
 
 ## Installation
 
